@@ -5,11 +5,7 @@ import urllib3
 
 urllib3.disable_warnings()
 
-controller = "sandboxapic.cisco.com:9443"
-username = "admin"
-password = "C!sc0123"
-version = "v1"
-ticket = get_aut_ticket(controller, username, password)
+ticket = get_aut_ticket()
 
 headers = {'X-Auth-Token' : ticket}
 
@@ -21,8 +17,8 @@ response_json = r.json()
 
 print("Status: ", r.status_code)
 
-print(json.dumps(response_json,indent=4),'\n')
+print(json.dumps(response_json,indent=4))
 
 for item in response_json["response"]:
     for item1 in item["authorization"]:
-        print("Role user is the ", (item["username"],(item1["role"])[5:]))
+        print ("User %s, role is the %s."%(item["username"],(item1["role"])[5:]))
