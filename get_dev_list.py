@@ -33,7 +33,7 @@ if status != 200:
 if device != []:
     device_list = []
     for i in device:
-        device_list.append([i["hostname"], i["managementIpAddress"], i["type"], i["id"]])
+        device_list.append([i["hostname"], i["managementIpAddress"], i["type"], i["instanceUuid"]])
 else:
     print("No device!")
 

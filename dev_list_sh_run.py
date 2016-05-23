@@ -2,8 +2,9 @@ from get_ticket import *
 import requests
 import urllib3
 import sys
-import json
 from tabulate import tabulate
+
+
 
 urllib3.disable_warnings()
 
@@ -34,35 +35,35 @@ if device != []:
     device_sh_list = []
 
     for i in device:
-        device_list.append([i["hostname"], i["managementIpAddress"], i["type"], i["instanceUuid"]])
+        device_list.append([i["hostname"], i["managementIpAddress"], i["type"], i["id"]])
         device_sh_list.append([i["hostname"], i["managementIpAddress"], i["type"]])
 
     print(tabulate(device_sh_list,headers=['hostname', 'ip', 'type'], tablefmt='rst'))
 
     select = True
-    id = ""
+    net_id = ""
 
     while select:
-            user_input = raw_input("Enter IP or hostname: ")
-            user_input= user_input.replace(" ", "")
+            user_input = input("Enter IP or Hostname:")
+            user_input = user_input.replace(" ", "")
             if user_input.lower() == 'exit':
                 sys.exit()
             for i in device_list:
                 if user_input in i:
-                    id = i[3]
+                    net_id = i[3]
                     select = False
                     break
-            if id == "":
+            if net_id == "":
                 print("No device found")
 
-    url = "https://"+controller+"/api/v1/network_device/"+id+"/config"
-    resp = requests.get(url=url,headers=headers, verify=False)
+    url = "https://"+controller+"/api/v1/network_device/"+net_id+"/config"
+    resp = requests.get(url=url,headers=headers,verify=False)
     status = resp.status_code
     print ("Status: ", status)
-    try:
-        response_json = resp.json()
-        print (response_json["response"])
 
+    try:
+        response_json = json.loads(resp.text)
+        print (response_json["response"])
     except:
         if status == 204:
             print("no content")
@@ -72,6 +73,5 @@ if device != []:
 
 else:
     print("No network device at all!")
-
 
 
