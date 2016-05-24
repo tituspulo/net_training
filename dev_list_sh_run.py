@@ -44,7 +44,7 @@ if device != []:
     net_id = ""
 
     while select:
-            user_input = input("Enter IP or Hostname:")
+            user_input = raw_input("Enter IP or Hostname:")
             user_input = user_input.replace(" ", "")
             if user_input.lower() == 'exit':
                 sys.exit()
@@ -56,14 +56,13 @@ if device != []:
             if net_id == "":
                 print("No device found")
 
-    url = "https://"+controller+"/api/v1/network_device/"+net_id+"/config"
-    resp = requests.get(url=url,headers=headers,verify=False)
+    url = "https://"+controller+"/api/v1/network-device/"+net_id+"/config"
+    resp = requests.get(url=url, headers=headers, verify=False)
     status = resp.status_code
     print ("Status: ", status)
-
     try:
-        response_json = json.loads(resp.text)
-        print (response_json["response"])
+        data = resp.json()
+        print (data["response"])
     except:
         if status == 204:
             print("no content")
