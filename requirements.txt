@@ -38,7 +38,7 @@ tabulate==0.7.5
 Twisted-Core==13.2.0
 Twisted-Web==13.2.0
 unity-lens-photos==1.0
-urllib3==1.15.1
+urllib3==1.26.5
 virtualenv==15.0.1
 virtualenv-clone==0.2.6
 virtualenvwrapper==4.7.1
